@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Javier Pascual - Software Engineer</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="http://fonts.googleapis.com/css?family=Lato:100,300" rel="stylesheet">
+  <script type="text/javascript" async src="js/knockout-3.3.0.js"></script>
+</head>
+<body>
+  <div id="wrapper">
+   <div id="map">
+   </div>
+   <div >
+     <ul id="locationsList"></ul>
+   </div>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+<script>
+  google.maps.event.addDomListener(window, 'load', initializeMap);
+</script>
+
+</body>
+</html>

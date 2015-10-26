@@ -1,0 +1,16 @@
+html, body
+{
+  height: 100%;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  color: #676858;
+}
+
+li {
+  list-style: none;
+}
+
+#wrapper { position: relative; height: 100%; width: 100%;}
+#map {float: left;  width: 80%; height: 100%;}
