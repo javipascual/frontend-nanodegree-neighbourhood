@@ -13,11 +13,22 @@
    <div id="map">
    </div>
    <div >
+    <form data-bind="submit: search">
+      <input data-bind='value: itemToAdd, valueUpdate: "afterkeydown"' />
+      <button type="submit" data-bind="enable: itemToAdd().length > 0">Search</button>
+      <p>Results:</p>
+      <ul data-bind="foreach: items">
+        <li data-bind="click: $parent.onClick">
+         <span data-bind="text: $data"> </span>
+        </li>
+      </ul>
+    </form>
      <ul id="locationsList"></ul>
    </div>
 </div>
 
 <script src="https://maps.googleapis.com/maps/api/js"></script>
+<script type="text/javascript" src="js/locations.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 <script>
   google.maps.event.addDomListener(window, 'load', initializeMap);
