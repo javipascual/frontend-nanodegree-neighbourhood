@@ -5,6 +5,10 @@ body
 
 li {
   list-style: none;
+  cursor: pointer;
 }
 
+li.selected {
+  background-color:LightGray;
+}
 #map { height: 100%; display: block;}
