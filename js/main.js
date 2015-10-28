@@ -16,10 +16,11 @@ var LocationsViewModel = function() {
   this.map = new google.maps.Map(mapCanvas, mapOptions);
 
 
-  this.search = function() {
-  	if (this.itemToAdd() != "") {
-  	   var term = this.itemToAdd();
-  		 this.itemToAdd("");
+  this.filter = function() {
+  	if (this.filterTerm() != "") {
+      console.log(this.filterTerm())
+  	   var term = this.filterTerm();
+  		 this.filterTerm("");
   	}
   }
 
@@ -50,23 +51,36 @@ var LocationsViewModel = function() {
   this.onMouseOver = function(location) {
 
   console.log(location.name + " ON")
-       location.marker.setAnimation(google.maps.Animation.BOUNCE);
-       location.isActive(true);
-
+    location.marker.setAnimation(google.maps.Animation.BOUNCE);
+    location.isActive(true);
   }
 
   this.onMouseOut = function(location) {
-
-  console.log(location.name + " OFF")
-       location.marker.setAnimation(null);
-location.isActive(false);
+    location.marker.setAnimation(null);
+    location.isActive(false);
   }
 
   this.addLocationsMarkers(locs);
 
-
 	this.items = ko.observableArray(locs);
-	this.itemToAdd = ko.observable("");
+	this.filterTerm = ko.observable("");
+
+  // filter the items using the filter text
+  this.filteredItems = ko.computed(function() {
+    var filter = this.filterTerm().toLowerCase();
+    if (!filter) {
+      ko.utils.arrayForEach(this.items(), function(item) {
+        item.marker.setVisible(true);
+      });
+      return this.items();
+    } else {
+        return ko.utils.arrayFilter(this.items(), function(item) {
+            const visible = (item.name.toLowerCase().indexOf(filter) === 0);
+            item.marker.setVisible(visible);
+            return visible;
+        });
+    }
+  }, this);
 }
 
 ko.applyBindings(new LocationsViewModel());

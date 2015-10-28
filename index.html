@@ -11,11 +11,11 @@
 <body>
   <div id="map" class="col-md-9"></div>
   <div class="col-md-3">
-    <form data-bind="submit: search">
-      <input data-bind='value: itemToAdd, valueUpdate: "afterkeydown"' />
-      <button type="submit" data-bind="enable: itemToAdd().length > 0">Search</button>
+    <form data-bind="submit: filter">
+      <input data-bind='value: filterTerm, valueUpdate: "afterkeydown"' />
+      <button type="submit" data-bind="enable: filterTerm().length > 0">Filter</button>
       <p>Results:</p>
-      <ul data-bind="foreach: items">
+      <ul data-bind="foreach: filteredItems">
         <li data-bind="event: { mouseover: $parent.onMouseOver, mouseout: $parent.onMouseOut }, css: {selected: $data.isActive}">
           <span data-bind="text: $data.name"> </span>
         </li>
