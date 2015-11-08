@@ -12,3 +12,33 @@ li.selected {
   background-color:LightGray;
 }
 #map { height: 100%; display: block;}
+
+span {
+  display:block;
+}
+
+span.name {
+  font-size: 1.25 em;
+  font-weight:bold;
+}
+
+span.url {
+  font-size: 1 em;
+  font-weight: normal;
+}
+
+span.cats {
+  font-size: 1 em;
+  font-style: italic;
+    font-weight: normal;
+}
+
+span.price {
+  font-size: 1 em;
+    font-weight: normal;
+}
+
+span.likes {
+  font-size: 1 em;
+    font-weight: normal;
+}
