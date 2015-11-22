@@ -1,7 +1,3 @@
-function initializeMap() {
-}
-
-
 // Overall viewmodel for this screen, along with initial state
 var LocationsViewModel = function() {
 
@@ -145,5 +141,3 @@ var LocationsViewModel = function() {
     }
   }, this);
 }
-
-ko.applyBindings(new LocationsViewModel());
