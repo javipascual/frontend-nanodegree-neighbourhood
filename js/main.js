@@ -43,7 +43,8 @@ var LocationsViewModel = function() {
         self.infoWindow.setContent(txt);
         self.infoWindow.open(self.map, location.marker);
       },
-      error: function() { // TODO console.log("error");
+      error: function() {
+        alert("Request failed");
       }
     }
 
@@ -72,9 +73,10 @@ var LocationsViewModel = function() {
                 	   self.items.push(locations[i]);
                   self.filteredItems = self.items;
               },
-  	  error: function() { // TODO console.log("error");
+  	  error: function() {
+        alert("Could not retrieve locations list!");
       }
-  	}
+    }
 
     $.ajax(settings);
   }
