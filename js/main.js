@@ -109,6 +109,10 @@ var LocationsViewModel = function() {
       l.marker.addListener('mouseout', function() {
         this.parent.isActive(false);
       });
+
+      l.marker.addListener('click', function() {
+        self.generateContentString(this.parent);
+      });
   	}
   }
 
