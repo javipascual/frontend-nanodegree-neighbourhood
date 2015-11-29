@@ -1,6 +1,6 @@
 var initApp = function() {
-  ko.applyBindings(new LocationsViewModel())
-}
+  ko.applyBindings(new LocationsViewModel());
+};
 
 var LocationsViewModel = function() {
 
@@ -11,7 +11,8 @@ var LocationsViewModel = function() {
     center: new google.maps.LatLng(52.496673, 13.424570),
     zoom: 14,
     mapTypeId: google.maps.MapTypeId.ROADMAP
-  }
+  };
+
   this.map = new google.maps.Map(mapCanvas, mapOptions);
   this.items = ko.observableArray([]);
   this.filterTerm = ko.observable("");
@@ -49,10 +50,10 @@ var LocationsViewModel = function() {
       error: function() {
         alert("Request failed");
       }
-    }
+    };
 
     $.ajax(settings);
-  }
+  };
 
   this.retrieveLocations = function() {
 
@@ -79,23 +80,29 @@ var LocationsViewModel = function() {
   	  error: function() {
         alert("Could not retrieve locations list!");
       }
-    }
+    };
 
     $.ajax(settings);
-  }
+  };
 
   this.retrieveLocations();
 
-  this.filter = function() {
-  	if (this.filterTerm() != "") {
-  	   var term = this.filterTerm();
-  		 this.filterTerm("");
-  	}
-  }
-
   // add markers to the map at the desired locations
   this.addLocationsMarkers = function(locations) {
-  	var cont = document.getElementById('locationsList');
+
+    var mouseOverCallback = function() {
+      this.parent.isActive(true);
+    };
+
+    var mouseOutCallback = function() {
+      this.parent.isActive(false);
+      this.setAnimation(null);
+    };
+
+    var mouseClickCallback = function() {
+      this.setAnimation(google.maps.Animation.BOUNCE);
+      self.generateContentString(this.parent);
+    };
 
   	for (var i = 0; i < locations.length; i++) {
       var l = locations[i];
@@ -107,32 +114,22 @@ var LocationsViewModel = function() {
         parent: l
   		});
 
-      l.marker.addListener('mouseover', function() {
-        this.parent.isActive(true);
-      });
-
-      l.marker.addListener('mouseout', function() {
-        this.parent.isActive(false);
-        this.setAnimation(null);
-      });
-
-      l.marker.addListener('click', function() {
-        this.setAnimation(google.maps.Animation.BOUNCE);
-        self.generateContentString(this.parent);
-      });
+      l.marker.addListener('mouseover', mouseOverCallback);
+      l.marker.addListener('mouseout', mouseOutCallback);
+      l.marker.addListener('click', mouseClickCallback);
   	}
-  }
+  };
 
   this.onMouseOver = function(location) {
     location.marker.setAnimation(google.maps.Animation.BOUNCE);
     location.isActive(true);
     self.generateContentString(location);
-  }
+  };
 
   this.onMouseOut = function(location) {
     location.marker.setAnimation(null);
     location.isActive(false);
-  }
+  };
 
 
   // filter the items using the filter text
@@ -145,10 +142,10 @@ var LocationsViewModel = function() {
       return self.items();
     } else {
         return ko.utils.arrayFilter(self.items(), function(item) {
-            const visible = (item.name.toLowerCase().indexOf(filter) === 0);
+            var visible = (item.name.toLowerCase().indexOf(filter) === 0);
             item.marker.setVisible(visible);
             return visible;
         });
     }
   }, this);
-}
+};

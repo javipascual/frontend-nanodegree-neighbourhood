@@ -16,7 +16,7 @@
       <div id="map"></div>
     </div>
     <div class="list box">
-      <form data-bind="submit: filter">
+      <form>
         <span class="filter">Filter</span><input data-bind='value: filterTerm, valueUpdate: "afterkeydown"' />
         <ul data-bind="foreach: filteredItems">
           <li data-bind="event: { mouseover: $parent.onMouseOver, mouseout: $parent.onMouseOut }, css: {selected: $data.isActive}">
