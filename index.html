@@ -5,23 +5,26 @@
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <script type="text/javascript" async src="js/knockout-3.3.0.js"></script>
+  <script type="text/javascript"  src="js/knockout-3.3.0.js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 </head>
 <body>
-  <div class="header" class="col-md-13">Hola</div>
-  <div id="map" class="col-md-9"></div>
-  <div class="col-md-3">
-    <form data-bind="submit: filter">
-      <input data-bind='value: filterTerm, valueUpdate: "afterkeydown"' />
-      <button type="submit" data-bind="enable: filterTerm().length > 0">Filter</button>
-      <p>Results:</p>
-      <ul data-bind="foreach: filteredItems">
-        <li data-bind="event: { mouseover: $parent.onMouseOver, mouseout: $parent.onMouseOut }, css: {selected: $data.isActive}">
-          <span data-bind="text: $data.name"> </span>
-        </li>
-      </ul>
-    </form>
+  <div class="container">
+    <div class="header box">
+    <span>Vegan Restaurants in Berlin</span></div>
+    <div class="map-container box">
+      <div id="map"></div>
+    </div>
+    <div class="list box">
+      <form data-bind="submit: filter">
+        <span class="filter">Filter</span><input data-bind='value: filterTerm, valueUpdate: "afterkeydown"' />
+        <ul data-bind="foreach: filteredItems">
+          <li data-bind="event: { mouseover: $parent.onMouseOver, mouseout: $parent.onMouseOut }, css: {selected: $data.isActive}">
+            <span data-bind="text: $data.name"> </span>
+          </li>
+        </ul>
+      </form>
+    </div>
   </div>
   <script src="https://maps.googleapis.com/maps/api/js"></script>
   <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
