@@ -108,9 +108,11 @@ var LocationsViewModel = function() {
 
       l.marker.addListener('mouseout', function() {
         this.parent.isActive(false);
+        this.setAnimation(null);
       });
 
       l.marker.addListener('click', function() {
+        this.setAnimation(google.maps.Animation.BOUNCE);
         self.generateContentString(this.parent);
       });
   	}
