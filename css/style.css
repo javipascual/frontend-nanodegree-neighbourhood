@@ -74,25 +74,25 @@ span {
 }
 
 span.name {
-  font-size: 1.25 em;
+  font-size: 1.25em;
   font-weight:bold;
 }
 
 span.url {
-  font-size: 1 em;
+  font-size: 1em;
 }
 
 span.cats {
-  font-size: 1 em;
+  font-size: 1em;
   font-style: italic;
 }
 
 span.price {
-  font-size: 1 em;
+  font-size: 1em;
 }
 
 span.likes {
-  font-size: 1 em;
+  font-size: 1em;
 }
 
 span.filter {
