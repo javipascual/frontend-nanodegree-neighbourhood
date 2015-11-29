@@ -1,4 +1,7 @@
-// Overall viewmodel for this screen, along with initial state
+var initApp = function() {
+  ko.applyBindings(new LocationsViewModel())
+}
+
 var LocationsViewModel = function() {
 
   var self = this;

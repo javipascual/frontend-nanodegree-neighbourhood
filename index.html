@@ -26,11 +26,9 @@
       </form>
     </div>
   </div>
-  <script src="https://maps.googleapis.com/maps/api/js"></script>
   <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
   <script type="text/javascript" src="js/main.js"></script>
-  <script>
-    google.maps.event.addDomListener(window, 'load', ko.applyBindings(new LocationsViewModel()));
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAiprlLOGVjeQvLVZrgQfgGHKkfAE6RcY&callback=initApp" async defer></script>
   </script>
 </body>
 </html>
