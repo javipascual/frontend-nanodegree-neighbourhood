@@ -31,9 +31,12 @@ var LocationsViewModel = function() {
     var settings =  {
       url: "https://api.foursquare.com/v2/venues/" + location.id,
       data: parameters,
+      timeout: 5000,
       cache: true,
       dataType: 'jsonp',
-      success: function(results) {
+      success: function(results, textStatus) {
+
+        if (textStatus === "timeout") { alert("Request failed"); return; };
 
         var cats = results.response.venue.categories.map(function(a) {return a.name;}).join();
         var url = results.response.venue.url;
@@ -48,9 +51,6 @@ var LocationsViewModel = function() {
         self.infoWindow.setContent(txt);
         self.infoWindow.open(self.map, location.marker);
       },
-      error: function() {
-        alert("Request failed");
-      }
     };
 
     $.ajax(settings);
@@ -69,18 +69,19 @@ var LocationsViewModel = function() {
     var settings =  {
       url: "https://api.foursquare.com/v2/venues/search",
   	  data: parameters,
+      timeout: 5000,
   	  cache: true,
   	  dataType: 'jsonp',
-  	  success: function(results) {
+  	  success: function(results, textStatus) {
+
+                  if (textStatus === "timeout") { alert("Could not retrieve locations list!"); return; };
+
                   var locations = results.response.venues;
                   self.addLocationsMarkers(locations);
                   for (var i = 0; i < locations.length; i++)
                 	   self.items.push(locations[i]);
                   self.filteredItems = self.items;
               },
-  	  error: function() {
-        alert("Could not retrieve locations list!");
-      }
     };
 
     $.ajax(settings);
