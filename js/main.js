@@ -7,7 +7,7 @@ var LocationsViewModel = function() {
   var self = this;
 
   var mapCanvas = document.getElementById('map'),
-      zoom = (window.innerHeight < 500 || window.innerWidth < 500) ? 12 : 13;
+      zoom = (window.innerHeight < 500 || window.innerWidth < 500) ? 12 : 13,
       mapOptions = {
         center: new google.maps.LatLng(52.496673, 13.424570),
         zoom: zoom,
@@ -17,18 +17,20 @@ var LocationsViewModel = function() {
   this.map = new google.maps.Map(mapCanvas, mapOptions);
   this.items = ko.observableArray([]);
   this.filterTerm = ko.observable("");
-  this.infoWindow = new google.maps.InfoWindow({content: "<div id=infowindow></div>"});
+  this.infoWindow = new google.maps.InfoWindow({
+    content: "<div id=infowindow></div>"
+  });
 
   this.generateContentString = function(location) {
 
     var parameters = {
       client_id: "OQDK0BHM4AQA3G2DAZTN3ZUUMNRJX4RG2XQHN5WJKF0TUMCT",
-      client_secret:"G0M3ZFUVZOCD1I3P2CMGT4KFFBYK5ZG5TC5EGLVJK3U2RRC0",
+      client_secret: "G0M3ZFUVZOCD1I3P2CMGT4KFFBYK5ZG5TC5EGLVJK3U2RRC0",
       v: "20130815",
       ll: "52.496673,13.424570"
     };
 
-    var settings =  {
+    var settings = {
       url: "https://api.foursquare.com/v2/venues/" + location.id,
       data: parameters,
       timeout: 5000,
@@ -36,11 +38,16 @@ var LocationsViewModel = function() {
       dataType: 'jsonp',
       success: function(results, textStatus) {
 
-        if (textStatus === "timeout") { alert("Request failed"); return; };
+        if (textStatus === "timeout") {
+          alert("Request failed");
+          return; 
+        };
 
-        var cats = results.response.venue.categories.map(function(a) {return a.name;}).join();
-            url = results.response.venue.url;
-            price = results.response.venue.attributes.groups[0] ? results.response.venue.attributes.groups[0].summary : "-";
+        var cats = results.response.venue.categories.map(function(a) {
+          return a.name;
+        }).join();
+        url = results.response.venue.url;
+        price = results.response.venue.attributes.groups[0] ? results.response.venue.attributes.groups[0].summary : "-";
 
         var txt = "<div>";
         txt += "<span class='name'>" + results.response.venue.name + "</name>";
@@ -60,28 +67,31 @@ var LocationsViewModel = function() {
 
     var parameters = {
       client_id: "OQDK0BHM4AQA3G2DAZTN3ZUUMNRJX4RG2XQHN5WJKF0TUMCT",
-      client_secret:"G0M3ZFUVZOCD1I3P2CMGT4KFFBYK5ZG5TC5EGLVJK3U2RRC0",
-      v:"20130815",
-      ll:"52.496673,13.424570",
-      query:"vegan&restaurant"
+      client_secret: "G0M3ZFUVZOCD1I3P2CMGT4KFFBYK5ZG5TC5EGLVJK3U2RRC0",
+      v: "20130815",
+      ll: "52.496673,13.424570",
+      query: "vegan&restaurant"
     };
 
-    var settings =  {
+    var settings = {
       url: "https://api.foursquare.com/v2/venues/search",
-  	  data: parameters,
+      data: parameters,
       timeout: 5000,
-  	  cache: true,
-  	  dataType: 'jsonp',
-  	  success: function(results, textStatus) {
+      cache: true,
+      dataType: 'jsonp',
+      success: function(results, textStatus) {
 
-                  if (textStatus === "timeout") { alert("Could not retrieve locations list!"); return; };
+        if (textStatus === "timeout") {
+          alert("Could not retrieve locations list!");
+          return; 
+        };
 
-                  var locations = results.response.venues;
-                  self.addLocationsMarkers(locations);
-                  for (var i = 0; i < locations.length; i++)
-                	   self.items.push(locations[i]);
-                  self.filteredItems = self.items;
-              },
+        var locations = results.response.venues;
+        self.addLocationsMarkers(locations);
+        for (var i = 0; i < locations.length; i++)
+          self.items.push(locations[i]);
+        self.filteredItems = self.items;
+      },
     };
 
     $.ajax(settings);
@@ -103,29 +113,36 @@ var LocationsViewModel = function() {
     var mouseClickCallback = function() {
       this.setAnimation(google.maps.Animation.BOUNCE);
       var that = this;
-      setTimeout(function(){ that.setAnimation(null) }, 1500)
+      setTimeout(function() {
+        that.setAnimation(null)
+      }, 1500)
       self.generateContentString(this.parent);
     };
 
-  	for (var i = 0; i < locations.length; i++) {
+    for (var i = 0; i < locations.length; i++) {
       var l = locations[i];
       l.isActive = ko.observable(false);
-  		l.marker = new google.maps.Marker({
-  			position: {lat: l.location.lat, lng:l.location.lng},
-  			label: l.name,
-  			map: this.map,
+      l.marker = new google.maps.Marker({
+        position: {
+          lat: l.location.lat,
+          lng: l.location.lng
+        },
+        label: l.name,
+        map: this.map,
         parent: l
-  		});
+      });
 
       l.marker.addListener('mouseover', mouseOverCallback);
       l.marker.addListener('mouseout', mouseOutCallback);
       l.marker.addListener('click', mouseClickCallback);
-  	}
+    }
   };
 
   this.onMouseOver = function(location) {
     location.marker.setAnimation(google.maps.Animation.BOUNCE);
-    setTimeout(function(){ location.marker.setAnimation(null) }, 1500);
+    setTimeout(function() {
+      location.marker.setAnimation(null)
+    }, 1500);
     location.isActive(true);
   };
 
@@ -145,12 +162,13 @@ var LocationsViewModel = function() {
         item.marker.setVisible(true);
       });
       return self.items();
-    } else {
-        return ko.utils.arrayFilter(self.items(), function(item) {
-            var visible = (item.name.toLowerCase().indexOf(filter) === 0);
-            item.marker.setVisible(visible);
-            return visible;
-        });
+    }
+    else {
+      return ko.utils.arrayFilter(self.items(), function(item) {
+        var visible = (item.name.toLowerCase().indexOf(filter) === 0);
+        item.marker.setVisible(visible);
+        return visible;
+      });
     }
   }, this);
 };
