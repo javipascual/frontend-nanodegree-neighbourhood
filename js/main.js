@@ -97,11 +97,12 @@ var LocationsViewModel = function() {
 
     var mouseOutCallback = function() {
       this.parent.isActive(false);
-      this.setAnimation(null);
     };
 
     var mouseClickCallback = function() {
       this.setAnimation(google.maps.Animation.BOUNCE);
+      var that = this;
+      setTimeout(function(){ that.setAnimation(null) }, 1500)
       self.generateContentString(this.parent);
     };
 
@@ -123,12 +124,12 @@ var LocationsViewModel = function() {
 
   this.onMouseOver = function(location) {
     location.marker.setAnimation(google.maps.Animation.BOUNCE);
+    setTimeout(function(){ location.marker.setAnimation(null) }, 1500);
     location.isActive(true);
     self.generateContentString(location);
   };
 
   this.onMouseOut = function(location) {
-    location.marker.setAnimation(null);
     location.isActive(false);
   };
 
