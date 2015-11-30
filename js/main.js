@@ -5,7 +5,7 @@ var initApp = function() {
 var LocationsViewModel = function() {
 
   var self = this;
-  console.log(window.innerHeight + " " + window.innerWidth)
+
   var mapCanvas = document.getElementById('map'),
       zoom = (window.innerHeight < 500 || window.innerWidth < 500) ? 12 : 13;
       mapOptions = {
