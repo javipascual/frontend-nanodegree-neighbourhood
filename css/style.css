@@ -14,20 +14,20 @@ body, html
 
 .header {
   padding: 2px 0px 2px 20px;
-  height: 5vh;
+  height: 4vh;
   font-family: 'Lobster', cursive;
   font-weight: 400;
-  font-size: 1.8em;
+  font-size: 1.2em;
   background-color: gray;
   text-shadow: 2px 2px 2px #aaa;
 }
 
 .map-container {
-  height: 45vh;
+  height: 50vh;
 }
 
 .list {
-  height: 45vh;
+  height: 40vh;
   font-family: Verdana, Geneva, sans-serif  ;
   font-size: 0.9em;
   overflow-y: auto;
@@ -48,7 +48,23 @@ ul {
   list-style-type: none;
 }
 
+@media only screen and (orientation: landscape) and (max-width: 700px) {
+  .header {
+    height: 6vh;
+  }
+  ul {
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+  }
+}
+
 @media screen and (min-width: 700px) {
+  .header {
+    height: 5vh;
+    font-size: 1.8em;
+  }
+
   .map-container {
     width: 70%;
     height: 90vh;
