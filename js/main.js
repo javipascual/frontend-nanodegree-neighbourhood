@@ -39,8 +39,8 @@ var LocationsViewModel = function() {
         if (textStatus === "timeout") { alert("Request failed"); return; };
 
         var cats = results.response.venue.categories.map(function(a) {return a.name;}).join();
-        var url = results.response.venue.url;
-        var price = results.response.venue.attributes.groups[0].summary;
+            url = results.response.venue.url;
+            price = results.response.venue.attributes.groups[0] ? results.response.venue.attributes.groups[0].summary : "-";
 
         var txt = "<div>";
         txt += "<span class='name'>" + results.response.venue.name + "</name>";
