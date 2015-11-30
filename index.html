@@ -19,7 +19,7 @@
       <form>
         <span class="filter">Filter</span><input data-bind='value: filterTerm, valueUpdate: "afterkeydown"' />
         <ul data-bind="foreach: filteredItems">
-          <li data-bind="event: { mouseover: $parent.onMouseOver, mouseout: $parent.onMouseOut }, css: {selected: $data.isActive}">
+          <li data-bind="event: { mouseover: $parent.onMouseOver, mouseout: $parent.onMouseOut, click: $parent.onClick }, css: {selected: $data.isActive}">
             <span data-bind="text: $data.name"> </span>
           </li>
         </ul>

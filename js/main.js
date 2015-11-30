@@ -127,13 +127,15 @@ var LocationsViewModel = function() {
     location.marker.setAnimation(google.maps.Animation.BOUNCE);
     setTimeout(function(){ location.marker.setAnimation(null) }, 1500);
     location.isActive(true);
-    self.generateContentString(location);
   };
 
   this.onMouseOut = function(location) {
     location.isActive(false);
   };
 
+  this.onClick = function(location) {
+    self.generateContentString(location);
+  };
 
   // filter the items using the filter text
   this.filteredItems = ko.computed(function() {
