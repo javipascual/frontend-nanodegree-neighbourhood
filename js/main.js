@@ -5,13 +5,14 @@ var initApp = function() {
 var LocationsViewModel = function() {
 
   var self = this;
-
-  var mapCanvas = document.getElementById('map');
-  var mapOptions = {
-    center: new google.maps.LatLng(52.496673, 13.424570),
-    zoom: 14,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
+  console.log(window.innerHeight + " " + window.innerWidth)
+  var mapCanvas = document.getElementById('map'),
+      zoom = (window.innerHeight < 500 || window.innerWidth < 500) ? 12 : 13;
+      mapOptions = {
+        center: new google.maps.LatLng(52.496673, 13.424570),
+        zoom: zoom,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
 
   this.map = new google.maps.Map(mapCanvas, mapOptions);
   this.items = ko.observableArray([]);
@@ -23,8 +24,8 @@ var LocationsViewModel = function() {
     var parameters = {
       client_id: "OQDK0BHM4AQA3G2DAZTN3ZUUMNRJX4RG2XQHN5WJKF0TUMCT",
       client_secret:"G0M3ZFUVZOCD1I3P2CMGT4KFFBYK5ZG5TC5EGLVJK3U2RRC0",
-      v:"20130815",
-      ll:"52.496673,13.424570"
+      v: "20130815",
+      ll: "52.496673,13.424570"
     };
 
     var settings =  {
