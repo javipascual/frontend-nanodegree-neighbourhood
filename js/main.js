@@ -1,3 +1,5 @@
+'use strict';
+
 var initApp = function() {
   ko.applyBindings(new LocationsViewModel());
 };
@@ -24,6 +26,11 @@ var LocationsViewModel = function() {
   // retrieves the list of the venues in the area
   this.retrieveLocations = function() {
 
+    var requestTimeout = setTimeout(function() {
+      self.infoWindow.setContent("Error! failed to get locations");
+      self.infoWindow.open(self.map, location.marker);
+    }, 3000);
+
     var parameters = {
       client_id: "OQDK0BHM4AQA3G2DAZTN3ZUUMNRJX4RG2XQHN5WJKF0TUMCT",
       client_secret: "G0M3ZFUVZOCD1I3P2CMGT4KFFBYK5ZG5TC5EGLVJK3U2RRC0",
@@ -36,12 +43,11 @@ var LocationsViewModel = function() {
     var settings = {
       url: "https://api.foursquare.com/v2/venues/search",
       data: parameters,
-      timeout: 5000,
       cache: true,
       dataType: 'jsonp',
-      success: function(results, textStatus) {
+      success: function(results) {
 
-        if (textStatus === "timeout") { alert("Could not retrieve locations list!"); return; };
+        clearTimeout(requestTimeout);
 
         var locations = results.response.venues;
         self.addLocationsMarkers(locations);
@@ -62,6 +68,11 @@ var LocationsViewModel = function() {
   // retrieves specific information for a location
   this.generateLocationContent = function(location) {
 
+    var requestTimeout = setTimeout(function() {
+      self.infoWindow.setContent("Error! failed to get location data");
+      self.infoWindow.open(self.map, location.marker);
+    }, 3000);
+
     var parameters = {
       client_id: "OQDK0BHM4AQA3G2DAZTN3ZUUMNRJX4RG2XQHN5WJKF0TUMCT",
       client_secret: "G0M3ZFUVZOCD1I3P2CMGT4KFFBYK5ZG5TC5EGLVJK3U2RRC0",
@@ -72,21 +83,17 @@ var LocationsViewModel = function() {
     var settings = {
       url: "https://api.foursquare.com/v2/venues/" + location.id,
       data: parameters,
-      timeout: 5000,
       cache: true,
       dataType: 'jsonp',
-      success: function(results, textStatus) {
+      success: function(results) {
 
-        if (textStatus === "timeout") {
-          alert("Request failed");
-          return; 
-        };
+        clearTimeout(requestTimeout);
 
         var cats = results.response.venue.categories.map(function(a) {
           return a.name;
         }).join();
-        url = results.response.venue.url;
-        price = results.response.venue.attributes.groups[0] ? results.response.venue.attributes.groups[0].summary : "-";
+        var url = results.response.venue.url;
+        var price = results.response.venue.attributes.groups[0] ? results.response.venue.attributes.groups[0].summary : "-";
 
         var txt = "<div>";
         txt += "<span class='name'>" + results.response.venue.name + "</name>";
@@ -96,6 +103,8 @@ var LocationsViewModel = function() {
         txt += "</div>";
         self.infoWindow.setContent(txt);
         self.infoWindow.open(self.map, location.marker);
+
+        clearTimeout(requestTimeout);
       },
     };
 
@@ -118,8 +127,8 @@ var LocationsViewModel = function() {
       this.setAnimation(google.maps.Animation.BOUNCE);
       var that = this;
       setTimeout(function() {
-        that.setAnimation(null)
-      }, 1500)
+        that.setAnimation(null);
+      }, 1500);
       self.generateLocationContent(this.parent);
     };
 
@@ -146,16 +155,18 @@ var LocationsViewModel = function() {
   this.onMouseOver = function(location) {
     location.marker.setAnimation(google.maps.Animation.BOUNCE);
     setTimeout(function() {
-      location.marker.setAnimation(null)
+      location.marker.setAnimation(null);
     }, 1500);
     location.isActive(true);
   };
 
   this.onMouseOut = function(location) {
     location.isActive(false);
+    location.marker.setAnimation(null);
   };
 
   this.onClick = function(location) {
+    location.marker.setAnimation(null);
     self.generateLocationContent(location);
   };
 

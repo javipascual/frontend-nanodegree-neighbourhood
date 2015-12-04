@@ -5,8 +5,8 @@
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
-  <script type="text/javascript"  src="js/knockout-3.3.0.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
+  <script src="js/knockout-3.3.0.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 </head>
 <body>
   <div class="container">
@@ -17,7 +17,7 @@
     </div>
     <div class="list box">
       <form>
-        <span class="filter">Filter</span><input data-bind='value: filterTerm, valueUpdate: "afterkeydown"' />
+        <span class="filter">Filter</span><input data-bind="value: filterTerm, valueUpdate: 'afterkeydown'" />
         <ul data-bind="foreach: filteredItems">
           <li data-bind="event: { mouseover: $parent.onMouseOver, mouseout: $parent.onMouseOut, click: $parent.onClick }, css: {selected: $data.isActive}">
             <span data-bind="text: $data.name"> </span>
@@ -26,8 +26,8 @@
       </form>
     </div>
   </div>
-  <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-  <script type="text/javascript" src="js/main.js"></script>
+  <script src="js/jquery-1.11.3.min.js"></script>
+  <script src="js/main.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAiprlLOGVjeQvLVZrgQfgGHKkfAE6RcY&amp;callback=initApp" async defer></script>
 </body>
 </html>
